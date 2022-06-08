@@ -1,159 +1,119 @@
 import random
-#import World
+import World
+import Point
+from abc import ABC, abstractmethod
 
-class Organism:
+class Organism(ABC):
 
     DELIMITER = " "
+    STRONGER = 1
+    EQUAL = 0
+    WEAKER = -1
 
-    def __init__(self, _world):
+    def __init__(self, _world, arr=None):
         self.world = _world
-        self.strength = -1
-        self.initiative = -1
         self.isAlive = True
         self.stepRange = 1
-        self.birthTime = self.world.numberOfBornOrganisms + 1
+        self.initiative = -1
+        self.name = ""
+        self.sign = ""
 
-        int x, y
-        int fields = World.FIELDS_NUMBER
-        do {
-            x = rand.nextInt(fields)
-            y = rand.nextInt(fields)
-        } while (world.board[x][y] != null)
+        if arr == None:
+            self.strength = -1
+            self.birthTime = self.world.numberOfBornOrganisms + 1
 
-        point.x = x
-        point.y = y
-    
+            fields = World.FIELDS_NUMBER
+            while True:
+                x = random.randint(0, fields - 1)
+                y = random.randint(0, fields - 1)
+                if self.world.board[x][y] == None:
+                    break
+            self.point = Point(x, y)
+        else:
+            self.point = Point(int(arr[1]), int(arr[2]))
+            self.birthTime = int(arr[3])
+            self.strength = int(arr[4])
 
-    public Organism(World _world, String[] arr) {
-        world = _world
-        isAlive = true
-        stepRange = 1
-        point.x = Integer.parseInt(arr[1])
-        point.y = Integer.parseInt(arr[2])
-        birthTime = Integer.parseInt(arr[3])
-        strength = Integer.parseInt(arr[4])
-    }
+    @abstractmethod
+    def whoAmI(self):
+        pass
 
-    public abstract OrganismsNames whoAmI()
-    public abstract void action()
-    public abstract void draw(Graphics g)
+    @abstractmethod
+    def action(self):
+        pass
 
-    public String getName() {
-        return name
-    }
+    @abstractmethod
+    def draw(sellf):
+        pass
 
-    public int getStrength() {
-        return strength
-    }
+    def amIStronger(self, other):
+        if self.strength > other.strength:
+            return Organism.STRONGER
+        elif self.strength == other.strength:
+            return Organism.EQUAL
+        else:
+            return Organism.WEAKER
 
-    public int getInitiative() {
-        return initiative
-    }
+    def ifIRepelledTheAttack(self, attacker):
+        return False
 
-    public Point getPoint() {
-        return point
-    }
+    def ifIEscaped(self, attacker):
+        return False
 
-    public boolean getIsAlive() {
-        return isAlive
-    }
+    def ifILostTheFight(self, attacker):
+        return self.amIStronger(attacker) != Organism.STRONGER
 
-    public World getWorld() {
-        return world
-    }
+    def findFieldsToMove(self):
+        current = self.point
 
-    public void setStrength(final int newStrength) {
-        strength = newStrength
-    }
+        possibleMoves = []
+        for i in range(-1 * self.stepRange, self.stepRange + 1, self.stepRange):
+            for j in range(-1 * self.stepRange, self.stepRange + 1, self.stepRange):
+                if i == 0 and j == 0:
+                    continue
 
-    public void setBirthTime(final int _birthTime) {
-        birthTime = _birthTime
-    }
-
-    protected enum Strength {
-        STRONGER,
-        EQUAL,
-        WEAKER
-    }
-
-    protected Strength amIStronger(final Organism other) {
-        if (strength > other.strength) return Strength.STRONGER
-   	    else if (strength == other.strength) return Strength.EQUAL
-   	    else return Strength.WEAKER
-    }
-
-    public boolean ifIRepelledTheAttack(final Organism attacker) {
-        return false
-    }
-
-    public boolean ifIEscaped(Animal attacker) {
-        return false
-    }
-
-    public boolean ifILostTheFight(Organism attacker) {
-        return amIStronger(attacker) != Strength.STRONGER
-    }
-
-    public ArrayList < Point > findFieldsToMove() {
-        Point current, possibleMove
-        current = point
-
-        ArrayList < Point > possibleMoves = new ArrayList <> ()
-        for (int i=-1 * stepRange
-             i <= stepRange
-             i += stepRange) {
-            for (int j=-1 * stepRange
-                 j <= stepRange
-                 j += stepRange) {
-                if (i == 0 & & j == 0)
-                continue
-
-                possibleMove = new Point(current.x + i, current.y + j)
-                if (world.isFieldInBoard(possibleMove))
-                possibleMoves.add(possibleMove)
-            }
-        }
+                possibleMove = Point(current.x + i, current.y + j)
+                if self.world.isFieldInBoard(possibleMove):
+                    possibleMoves.append(possibleMove)
 
         return possibleMoves
-    }
 
-    public void removeOccupiedFields(ArrayList < Point > possibleMoves) {
-        possibleMoves.removeIf(field -> (!world.isFieldUnoccupied(field)))
-    }
+    def removeOccupiedFields(self, possibleMoves):
+        possibleMoves[:] = [
+            move for move in possibleMoves if self.world.isFieldUnoccupied(move)]
 
-    public void putOnBoard() {
-        world.board[point.x][point.y] = this
-    }
+    def putOnBoard(self):
+        self.world.board[self.point.x][self.point.y] = self
 
-    public void moveToField(Point newPoint) {
-        world.clearTheField(point)
-        point = newPoint
-        putOnBoard()
-    }
+    def moveToField(self, newPoint):
+        self.world.clearTheField(self.point)
+        self.point = newPoint
+        self.putOnBoard()
 
-    public void writeIWon() {
-        world.text += this + " won the fight: "
-    }
+    def writeIWon(self):
+        self.world.text += str(self) + " won the fight: "
 
-    public void writeIDie() {
-        world.text += name + " is dead :(\n"
-    }
+    def writeIDie(self):
+        self.world.text += self.name + " is dead :(\n"
 
-    public void die() {
-        isAlive = false
-        world.clearTheField(point)
-        writeIDie()
-    }
+    def die(self):
+        self.isAlive = False
+        self.world.clearTheField(self.point)
+        self.writeIDie()
 
-    public void makeChild(ArrayList < Point > possibleFields) {
-        Organism child = world.createOrganism(this.whoAmI())
+    def makeChild(self, possibleFields):
+        child = self.world.createOrganism(self.whoAmI())
 
-        int which = rand.nextInt(possibleFields.size())
-        child.moveToField(possibleFields.get(which))
-        world.insertIntoToAdd(child)
-    }
+        which = random.randrange(len(possibleFields))
+        child.moveToField(possibleFields[which])
+        self.world.insertIntoToAdd(child)
 
-    protected abstract void drawShapeOrg(Graphics g, Color color)
+    def __str__(self) -> str:
+        return self.name + " (" + str(self.point.x) + "," + str(self.point.y) + ")"
+
+    """
+    @abstractmethod
+    def drawShapeOrg(Graphics g, Color color):
 
     protected void drawOrg(Graphics g, Color color) {
         drawShapeOrg(g, color)
@@ -167,11 +127,6 @@ class Organism:
                      (int)(y - (g.getFont().getSize() / 2)) + 4)
     }
 
-    @ Override
-    public String toString() {
-        return name + " (" + point.x + "," + point.y + ")"
-    }
-
     public void writeMeToFile(BufferedWriter writer) throws IOException {
         writer.write(sign + DELIMITER + point.x + DELIMITER +
                      point.y + DELIMITER + birthTime + DELIMITER + strength)
@@ -181,3 +136,4 @@ class Organism:
 
     protected void myOwnFieldsToFile(BufferedWriter writer) throws IOException {
     }
+    """

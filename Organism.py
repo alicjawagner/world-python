@@ -1,7 +1,9 @@
 import random
 import World
 import Point
+import OrganismsNames
 from abc import ABC, abstractmethod
+
 
 class Organism(ABC):
 
@@ -62,6 +64,12 @@ class Organism(ABC):
 
     def ifILostTheFight(self, attacker):
         return self.amIStronger(attacker) != Organism.STRONGER
+
+    def isAnimal(self):
+        me = self.whoAmI()
+        if me == OrganismsNames.GRASS or me == OrganismsNames.GUARANA or me == OrganismsNames.DANDELION or me == OrganismsNames.DEADLY_NIGHTSHADE or me == OrganismsNames.PINE_BORSCHT:
+            return False
+        return True
 
     def findFieldsToMove(self):
         current = self.point

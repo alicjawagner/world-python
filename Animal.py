@@ -1,10 +1,11 @@
 import Organism
 import random
 
+
 class Animal(Organism):
 
     def __init__(self, _world, arr=None):
-        super.__init__(_world, arr)
+        super().__init__(_world, arr)
 
     def isTheSameSpecies(self, other):
         if other == None:
@@ -52,7 +53,8 @@ class Animal(Organism):
             return
 
         self.makeChild(forChild)
-        self.world.text += self.name + " child - parents: (" + str(self.point.x) + "," + str(self.point.y) + ") & (" + str(attacked.point.x) + "," + str(attacked.point.y) + ")\n"
+        self.world.text += self.name + " child - parents: (" + str(self.point.x) + "," + str(
+            self.point.y) + ") & (" + str(attacked.point.x) + "," + str(attacked.point.y) + ")\n"
 
     """
     def drawShapeOrg(Graphics g, Color color):

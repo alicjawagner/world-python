@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class OrganismsNames(Enum):
     FOX = 0
     WOLF = 1

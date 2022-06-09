@@ -1,9 +1,9 @@
-import Animal
-import OrganismsNames
+import animal
+import organismsNames
 import random
 
 
-class Turtle(Animal):
+class Turtle(animal.Animal):
 
     PROBABILITY_NOT_MOVING = 75
 
@@ -27,7 +27,7 @@ class Turtle(Animal):
         super().action()
 
     def whoAmI(self):
-        return OrganismsNames.TURTLE
+        return organismsNames.OrganismsNames.TURTLE
 
     # def draw(Graphics g):
     #    drawOrg(g, new Color(138, 154, 91))

@@ -1,9 +1,9 @@
-import Plant
-import OrganismsNames
-import Point
+import plant
+import organismsNames
+import point
 
 
-class PineBorscht(Plant):
+class PineBorscht(plant.Plant):
 
     def __init__(self, _world, arr=None):
         super().__init__(_world, arr)
@@ -13,7 +13,7 @@ class PineBorscht(Plant):
             self.strength = 10
 
     def whoAmI(self):
-        return OrganismsNames.PINE_BORSCHT
+        return organismsNames.OrganismsNames.PINE_BORSCHT
 
     def action(self):
         # kills all the nearest animals
@@ -22,7 +22,7 @@ class PineBorscht(Plant):
                 if i == 0 and j == 0:
                     continue
 
-                toKill = Point(self.point.x + i, self.point.y + j)
+                toKill = point.Point(self.point.x + i, self.point.y + j)
                 if self.world.isFieldInBoard(toKill) == False or self.world.isFieldUnoccupied(toKill):
                     continue
 

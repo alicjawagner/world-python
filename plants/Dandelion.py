@@ -1,8 +1,8 @@
-import Plant
-import OrganismsNames
+import plant
+import organismsNames
 
 
-class Dandelion(Plant):
+class Dandelion(plant.Plant):
 
     def __init__(self, _world, arr=None):
         super().__init__(_world, arr)
@@ -16,7 +16,7 @@ class Dandelion(Plant):
             super().action()
 
     def whoAmI(self):
-        return OrganismsNames.DANDELION
+        return organismsNames.OrganismsNames.DANDELION
 
     # def draw(Graphics g):
     #    drawOrg(g, new Color(245, 187, 0))

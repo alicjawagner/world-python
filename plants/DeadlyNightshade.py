@@ -1,8 +1,8 @@
-import Plant
-import OrganismsNames
+import plant
+import organismsNames
 
 
-class DeadlyNightshade(Plant):
+class DeadlyNightshade(plant.Plant):
 
     def __init__(self, _world, arr=None):
         super().__init__(_world, arr)
@@ -12,7 +12,7 @@ class DeadlyNightshade(Plant):
             self.strength = 99
 
     def whoAmI(self):
-        return OrganismsNames.DEADLY_NIGHTSHADE
+        return organismsNames.OrganismsNames.DEADLY_NIGHTSHADE
 
     def writeIWon(self):
         self.world.text += str(self) + " poison: "

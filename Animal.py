@@ -1,8 +1,8 @@
-import Organism
+import organism
 import random
 
 
-class Animal(Organism):
+class Animal(organism.Organism):
 
     def __init__(self, _world, arr=None):
         super().__init__(_world, arr)

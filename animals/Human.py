@@ -1,9 +1,9 @@
-import Animal
-import OrganismsNames
-import Point
+import animal
+import organismsNames
+import point
 
 
-class Human(Animal):
+class Human(animal.Animal):
 
     START_POTION = 5
     COUNTDOWN_POTION = 10
@@ -55,7 +55,7 @@ class Human(Animal):
         if self.potionCountdown > 0:
             self.countDownPotion()
 
-        newPoint = Point(self.point.x, self.point.y)
+        newPoint = point.Point(self.point.x, self.point.y)
         if self.nextMove == Human.UP:
             newPoint.y = self.point.y - 1
         elif self.nextMove == Human.DOWN:
@@ -71,7 +71,7 @@ class Human(Animal):
             self.makeMoveOrCollision(newPoint)
 
     def whoAmI(self):
-        return OrganismsNames.HUMAN
+        return organismsNames.OrganismsNames.HUMAN
 
     def resetPotionText(self):
         self.potionText = ""

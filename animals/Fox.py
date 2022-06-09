@@ -1,8 +1,8 @@
-import Animal
-import OrganismsNames
+import animal
+import organismsNames
 
 
-class Fox(Animal):
+class Fox(animal.Animal):
 
     def __init__(self, _world, arr=None):
         super().__init__(_world, arr)
@@ -23,7 +23,7 @@ class Fox(Animal):
         return possibleMoves
 
     def whoAmI(self):
-        return OrganismsNames.FOX
+        return organismsNames.OrganismsNames.FOX
 
     # def draw(Graphics g):
     #    drawOrg(g, new Color(255, 124, 5))

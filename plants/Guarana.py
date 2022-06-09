@@ -1,8 +1,8 @@
-import Plant
-import OrganismsNames
+import plant
+import organismsNames
 
 
-class Guarana(Plant):
+class Guarana(plant.Plant):
 
     def __init__(self, _world, arr=None):
         super().__init__(_world, arr)
@@ -21,7 +21,7 @@ class Guarana(Plant):
         self.world.text += self.name + " is dead :( (+3)\n"
 
     def whoAmI(self):
-        return OrganismsNames.GUARANA
+        return organismsNames.OrganismsNames.GUARANA
 
     # def draw(Graphics g):
     #    drawOrg(g, new Color(126, 200, 80))

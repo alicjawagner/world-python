@@ -1,10 +1,10 @@
-import Animal
-import OrganismsNames
+import animal
+import organismsNames
+import point
 import random
-import Point
 
 
-class Antelope(Animal):
+class Antelope(animal.Animal):
 
     PROBABILITY_ESCAPING = 50
 
@@ -27,11 +27,12 @@ class Antelope(Animal):
             if len(possibleMoves) == 0:
                 return False
 
-            myOld = Point(self.point.x, self.point.y)
+            myOld = point.Point(self.point.x, self.point.y)
             attacker.moveToField(myOld)
 
             which = random.randrange(len(possibleMoves))
-            self.point = Point(possibleMoves[which].x, possibleMoves[which].y)
+            self.point = point.Point(
+                possibleMoves[which].x, possibleMoves[which].y)
             self.putOnBoard()
 
             self.world.text += str(self) + " escaped the fight ;) on field (" + str(
@@ -43,7 +44,7 @@ class Antelope(Animal):
         if self.isTheSameSpecies(attacked):
             self.reproduce(attacked)
         elif random.randrange(100) < Antelope.PROBABILITY_ESCAPING:
-            myOld = Point(self.point.x, self.point.y)
+            myOld = point.Point(self.point.x, self.point.y)
             self.point = attacked.point
             self.stepRange = 1
             possibleMoves = self.findFieldsToMove()
@@ -57,7 +58,7 @@ class Antelope(Animal):
             super().collision(attacked)
 
     def whoAmI(self):
-        return OrganismsNames.ANTELOPE
+        return organismsNames.OrganismsNames.ANTELOPE
 
     # def draw(Graphics g):
     #    drawOrg(g, new Color(158, 121, 104))

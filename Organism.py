@@ -1,7 +1,7 @@
 import random
-import World
-import Point
-import OrganismsNames
+import world
+import point
+import organismsNames
 from abc import ABC, abstractmethod
 
 
@@ -24,15 +24,15 @@ class Organism(ABC):
             self.strength = -1
             self.birthTime = self.world.numberOfBornOrganisms + 1
 
-            fields = World.FIELDS_NUMBER
+            fields = world.World.FIELDS_NUMBER
             while True:
                 x = random.randint(0, fields - 1)
                 y = random.randint(0, fields - 1)
                 if self.world.board[x][y] == None:
                     break
-            self.point = Point(x, y)
+            self.point = point.Point(x, y)
         else:
-            self.point = Point(int(arr[1]), int(arr[2]))
+            self.point = point.Point(int(arr[1]), int(arr[2]))
             self.birthTime = int(arr[3])
             self.strength = int(arr[4])
 
@@ -44,9 +44,9 @@ class Organism(ABC):
     def action(self):
         pass
 
-    @abstractmethod
+    """@abstractmethod
     def draw(sellf):
-        pass
+        pass"""
 
     def amIStronger(self, other):
         if self.strength > other.strength:
@@ -67,7 +67,7 @@ class Organism(ABC):
 
     def isAnimal(self):
         me = self.whoAmI()
-        if me == OrganismsNames.GRASS or me == OrganismsNames.GUARANA or me == OrganismsNames.DANDELION or me == OrganismsNames.DEADLY_NIGHTSHADE or me == OrganismsNames.PINE_BORSCHT:
+        if me == organismsNames.OrganismsNames.GRASS or me == organismsNames.OrganismsNames.GUARANA or me == organismsNames.OrganismsNames.DANDELION or me == organismsNames.OrganismsNames.DEADLY_NIGHTSHADE or me == organismsNames.OrganismsNames.PINE_BORSCHT:
             return False
         return True
 
@@ -80,7 +80,7 @@ class Organism(ABC):
                 if i == 0 and j == 0:
                     continue
 
-                possibleMove = Point(current.x + i, current.y + j)
+                possibleMove = point.Point(current.x + i, current.y + j)
                 if self.world.isFieldInBoard(possibleMove):
                     possibleMoves.append(possibleMove)
 

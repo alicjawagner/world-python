@@ -1,8 +1,8 @@
-import Organism
+import organism
 import random
 
 
-class Plant(Organism):
+class Plant(organism.Organism):
 
     PROBABILITY_OF_SPREADING = 15
 

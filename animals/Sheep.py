@@ -1,8 +1,8 @@
-import Animal
-import OrganismsNames
+import animal
+import organismsNames
 
 
-class Sheep(Animal):
+class Sheep(animal.Animal):
 
     def __init__(self, _world, arr=None):
         super().__init__(_world, arr)
@@ -13,7 +13,7 @@ class Sheep(Animal):
             self.strength = 4
 
     def whoAmI(self):
-        return OrganismsNames.SHEEP
+        return organismsNames.OrganismsNames.SHEEP
 
     # def draw(Graphics g):
     #    drawOrg(g, new Color(211, 211, 211))

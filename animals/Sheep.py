@@ -15,5 +15,5 @@ class Sheep(animal.Animal):
     def whoAmI(self):
         return organismsNames.OrganismsNames.SHEEP
 
-    # def draw(Graphics g):
-    #    drawOrg(g, new Color(211, 211, 211))
+    def draw(self):
+        self.drawOrg((211, 211, 211))

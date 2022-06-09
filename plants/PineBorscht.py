@@ -31,5 +31,5 @@ class PineBorscht(plant.Plant):
                     self.world.findOnField(toKill).die()
         super().action()
 
-    #def draw(Graphics g):
-    #    drawOrg(g, new Color(204, 235, 68))
+    def draw(self):
+        self.drawOrg((204, 235, 68))

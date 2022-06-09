@@ -25,5 +25,5 @@ class Fox(animal.Animal):
     def whoAmI(self):
         return organismsNames.OrganismsNames.FOX
 
-    # def draw(Graphics g):
-    #    drawOrg(g, new Color(255, 124, 5))
+    def draw(self):
+        self.drawOrg((255, 124, 5))

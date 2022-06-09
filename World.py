@@ -37,6 +37,8 @@ class World:
         self.toAdd = []
         self.numberOfBornOrganisms = 0
         self.human = None
+        self.screen = None
+        self.textFont = None
         self.prepareWorld()
 
     def isFieldInBoard(point):

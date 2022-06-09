@@ -1,5 +1,6 @@
 import organism
 import random
+import pygame
 
 
 class Animal(organism.Organism):
@@ -56,8 +57,6 @@ class Animal(organism.Organism):
         self.world.text += self.name + " child - parents: (" + str(self.point.x) + "," + str(
             self.point.y) + ") & (" + str(attacked.point.x) + "," + str(attacked.point.y) + ")\n"
 
-    """
-    def drawShapeOrg(Graphics g, Color color):
-        g.setColor(color)
-        g.fillOval(point.x * FIELD_SIZE, point.y * FIELD_SIZE, FIELD_SIZE, FIELD_SIZE)
-    """
+    def drawShapeOrg(self, color):
+        center = ((self.point.x + 0.5) * self.world.FIELD_SIZE, (self.point.y + 0.5) * self.world.FIELD_SIZE)
+        pygame.draw.circle(self.world.screen, color, center, self.world.FIELD_SIZE/2)

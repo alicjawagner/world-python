@@ -92,3 +92,6 @@ class Human(animal.Animal):
         writer.write(DELIMITER + potionWorking + DELIMITER + potionCountdown)
     }
     """
+
+    def draw(self):
+        self.drawOrg((255, 0, 0))

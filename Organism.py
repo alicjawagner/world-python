@@ -44,9 +44,9 @@ class Organism(ABC):
     def action(self):
         pass
 
-    """@abstractmethod
+    @abstractmethod
     def draw(sellf):
-        pass"""
+        pass
 
     def amIStronger(self, other):
         if self.strength > other.strength:
@@ -119,22 +119,18 @@ class Organism(ABC):
     def __str__(self) -> str:
         return self.name + " (" + str(self.point.x) + "," + str(self.point.y) + ")"
 
-    """
+    
     @abstractmethod
-    def drawShapeOrg(Graphics g, Color color):
+    def drawShapeOrg(self, color):
+        pass
 
-    protected void drawOrg(Graphics g, Color color) {
-        drawShapeOrg(g, color)
+    def drawOrg(self, color):
+        self.drawShapeOrg(color)
 
-        g.setColor(Color.white)
-        g.setFont(new Font("Helvetica", Font.BOLD, 25))
-        FontMetrics metrics = world.getFontMetrics(g.getFont())
-        double x = ((double)(2 * point.x + 1) * FIELD_SIZE) / 2
-        double y = ((double)(2 * point.y + 2) * FIELD_SIZE) / 2
-        g.drawString(sign, (int)(x - (metrics.stringWidth(sign) / 2)),
-                     (int)(y - (g.getFont().getSize() / 2)) + 4)
-    }
+        text_surface = self.world.textFont.render(self.sign, False, (255, 255, 255))
+        self.world.screen.blit(text_surface, (self.point.x * self.world.FIELD_SIZE + 10, self.point.y * self.world.FIELD_SIZE + 2))
 
+"""
     public void writeMeToFile(BufferedWriter writer) throws IOException {
         writer.write(sign + DELIMITER + point.x + DELIMITER +
                      point.y + DELIMITER + birthTime + DELIMITER + strength)

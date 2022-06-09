@@ -18,5 +18,5 @@ class Dandelion(plant.Plant):
     def whoAmI(self):
         return organismsNames.OrganismsNames.DANDELION
 
-    # def draw(Graphics g):
-    #    drawOrg(g, new Color(245, 187, 0))
+    def draw(self):
+        self.drawOrg((245, 187, 0))

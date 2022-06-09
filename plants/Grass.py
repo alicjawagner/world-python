@@ -14,5 +14,5 @@ class Grass(plant.Plant):
     def whoAmI(self):
         return organismsNames.OrganismsNames.GRASS
 
-    # def draw(Graphics g):
-    #    drawOrg(g, new Color(86, 125, 70))
+    def draw(self):
+        self.drawOrg((86, 125, 70))

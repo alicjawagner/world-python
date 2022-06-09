@@ -15,5 +15,5 @@ class Wolf(animal.Animal):
     def whoAmI(self):
         return organismsNames.OrganismsNames.WOLF
 
-    # def draw(Graphics g):
-    #    drawOrg(g, new Color(43, 45, 47))
+    def draw(self):
+        self.drawOrg((43, 45, 47))

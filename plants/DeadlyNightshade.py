@@ -17,5 +17,5 @@ class DeadlyNightshade(plant.Plant):
     def writeIWon(self):
         self.world.text += str(self) + " poison: "
 
-    # def draw(Graphics g):
-    #    drawOrg(g, new Color(33, 37, 77))
+    def draw(self):
+        self.drawOrg((33, 37, 77))

@@ -1,5 +1,6 @@
 import organism
 import random
+import pygame
 
 
 class Plant(organism.Organism):
@@ -23,6 +24,6 @@ class Plant(organism.Organism):
     def writeIDie(self):
         self.world.text += self.name + " was eaten :(\n"
 
-    # def drawShapeOrg(Graphics g, Color color):
-    #    g.setColor(color)
-    #    g.fillRect(point.x * FIELD_SIZE, point.y * FIELD_SIZE, FIELD_SIZE, FIELD_SIZE)
+    def drawShapeOrg(self, color):
+        pygame.draw.rect(self.world.screen, color, pygame.Rect(self.point.x * self.world.FIELD_SIZE,
+                         self.point.y * self.world.FIELD_SIZE, self.world.FIELD_SIZE, self.world.FIELD_SIZE))

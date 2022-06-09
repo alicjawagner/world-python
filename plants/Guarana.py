@@ -23,5 +23,5 @@ class Guarana(plant.Plant):
     def whoAmI(self):
         return organismsNames.OrganismsNames.GUARANA
 
-    # def draw(Graphics g):
-    #    drawOrg(g, new Color(126, 200, 80))
+    def draw(self):
+        self.drawOrg((126, 200, 80))

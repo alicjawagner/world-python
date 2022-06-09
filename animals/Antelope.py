@@ -60,5 +60,5 @@ class Antelope(animal.Animal):
     def whoAmI(self):
         return organismsNames.OrganismsNames.ANTELOPE
 
-    # def draw(Graphics g):
-    #    drawOrg(g, new Color(158, 121, 104))
+    def draw(self):
+        self.drawOrg((158, 121, 104))

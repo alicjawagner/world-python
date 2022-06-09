@@ -29,5 +29,5 @@ class Turtle(animal.Animal):
     def whoAmI(self):
         return organismsNames.OrganismsNames.TURTLE
 
-    # def draw(Graphics g):
-    #    drawOrg(g, new Color(138, 154, 91))
+    def draw(self):
+        self.drawOrg((138, 154, 91))

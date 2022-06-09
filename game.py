@@ -4,9 +4,13 @@ import world
 
 class Game:
 
-    def __init__(self, _screen):
+    def __init__(self):
+        pygame.init()
+        pygame.font.init()
         self.world = world.World()
-        self.screen = _screen
+        self.world.screen = pygame.display.set_mode((self.world.SCREEN_WIDTH, self.world.SCREEN_HEIGHT))
+        self.world.textFont = pygame.font.SysFont('Helvetica', 25)
+        pygame.display.set_caption("The World")
 
     def startGame(self):
         while True:
@@ -17,27 +21,21 @@ class Game:
                     if event.key == pygame.K_RIGHT:
                         print("right pressed")
 
-
-            self.screen.fill((0, 0, 0))
-            pygame.draw.rect(self.screen, (0, 150, 255), pygame.Rect(10, 10, 50, 50))
+            self.drawWorld()
             pygame.display.update()
-
     
+    def drawWorld(self):
+        self.world.screen.fill((0, 0, 0))
+        for org in self.world.organisms:
+            org.draw()
+
+        #drawComments(g);
+
+        #if(human == null) {
+        #    gameOver(g); }
+
+
     """
-    def drawWorld(Graphics g) {
-
-        for(int i=0; i < SCREEN_HEIGHT/FIELD_SIZE; i++) {
-            g.drawLine(i * FIELD_SIZE, 0, i * FIELD_SIZE, SCREEN_HEIGHT);
-            g.drawLine(0, i * FIELD_SIZE, SCREEN_WIDTH, i * FIELD_SIZE); }
-
-        for (Organism o: organisms) {
-            o.draw(g); }
-
-        drawComments(g);
-
-        if(human == null) {
-            gameOver(g); }
-        repaint(); }
 
     private void drawTextWithNewLines(Graphics g, String text, int x, int y) {
         g.setColor(Color.white);

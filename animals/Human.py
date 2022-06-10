@@ -76,11 +76,8 @@ class Human(animal.Animal):
     def resetPotionText(self):
         self.potionText = ""
 
-    """
-    def myOwnFieldsToFile(BufferedWriter writer) throws IOException {
-        writer.write(DELIMITER + potionWorking + DELIMITER + potionCountdown)
-    }
-    """
+    def myOwnFieldsToFile(self, f):
+        f.write(self.DELIMITER + str(self.potionWorking) + self.DELIMITER + str(self.potionCountdown))
 
     def draw(self):
         self.drawOrg((255, 0, 0))

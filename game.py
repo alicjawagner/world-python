@@ -1,5 +1,6 @@
 import pygame, sys
 import world
+import organism
 
 
 class Game:
@@ -11,6 +12,7 @@ class Game:
         self.world.screen = pygame.display.set_mode((self.world.SCREEN_WIDTH, self.world.SCREEN_HEIGHT))
         self.world.textFont = pygame.font.SysFont('Helvetica', 25)
         pygame.display.set_caption("The World")
+        self.savesPath = "./saves/"
 
 
     def startGame(self):
@@ -124,13 +126,10 @@ class Game:
         fileName = self.showInputBox("Saving: enter file name and hit enter")
         self.saveToFile(fileName)
 
-    """def saveToFile(self, fileName):
-        BufferedWriter writer = new BufferedWriter(new FileWriter(World.PATH_TO_SAVES + fileName));
-
-        writer.write(world.getNumberOfBornOrganisms() +
-                     Organism.DELIMITER + world.organisms.size() + "\n");
-        for (Organism o: world.organisms)
-        o.writeMeToFile(writer);
-
-        writer.close();
-        world.text = "Game state saved";"""
+    def saveToFile(self, fileName):
+        f = open(self.savesPath + fileName, "w")
+        f.write(str(self.world.numberOfBornOrganisms) + organism.Organism.DELIMITER + str(len(self.world.organisms)) + "\n")
+        for org in self.world.organisms:
+            org.writeMeToFile(f)
+        f.close()
+        self.world.text = "Game state saved"

@@ -131,14 +131,11 @@ class Organism(ABC):
         textSur = self.world.textFont.render(self.sign, True, (255, 255, 255))
         self.world.screen.blit(textSur, (self.point.x * self.world.FIELD_SIZE + 10, self.point.y * self.world.FIELD_SIZE + 2))
 
-"""
-    public void writeMeToFile(BufferedWriter writer) throws IOException {
-        writer.write(sign + DELIMITER + point.x + DELIMITER +
-                     point.y + DELIMITER + birthTime + DELIMITER + strength)
-        myOwnFieldsToFile(writer)
-        writer.newLine()
-    }
+    def writeMeToFile(self, f):
+        f.write(self.sign + self.DELIMITER + str(self.point.x) +
+                self.DELIMITER + str(self.point.y) + self.DELIMITER + str(self.birthTime) + self.DELIMITER + str(self.strength))
+        self.myOwnFieldsToFile(f)
+        f.write("\n")
 
-    protected void myOwnFieldsToFile(BufferedWriter writer) throws IOException {
-    }
-    """
+    def myOwnFieldsToFile(self, f):
+        pass

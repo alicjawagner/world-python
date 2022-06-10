@@ -77,17 +77,6 @@ class Human(animal.Animal):
         self.potionText = ""
 
     """
-    def draw(Graphics g):
-        drawShapeOrg(g, Color.red)
-
-        g.setColor(Color.black)
-        g.setFont(new Font("Helvetica", Font.BOLD, 31))
-        FontMetrics metrics = world.getFontMetrics(g.getFont())
-        double x = ((double)(2 * point.x + 1) * FIELD_SIZE) / 2
-        double y = ((double)(2 * point.y + 2) * FIELD_SIZE) / 2
-        g.drawString(String.valueOf(sign), (int)(
-            x - (metrics.stringWidth(String.valueOf(sign)) / 2)) + 1, (int)(y - (g.getFont().getSize() / 2)) + 9)
-
     def myOwnFieldsToFile(BufferedWriter writer) throws IOException {
         writer.write(DELIMITER + potionWorking + DELIMITER + potionCountdown)
     }

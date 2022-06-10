@@ -13,3 +13,4 @@ class OrganismsNames(Enum):
     GUARANA = 8
     DEADLY_NIGHTSHADE = 9
     PINE_BORSCHT = 10
+    CYBERSHEEP = 11

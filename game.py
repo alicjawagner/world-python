@@ -87,4 +87,4 @@ class Game:
         gameOver = "Game Over"
         textFont = pygame.font.SysFont('Times New Roman', 55, True)
         textSurface = textFont.render(gameOver, False, (255, 0, 0))
-        self.world.screen.blit(textSurface, (self.world.SCREEN_WIDTH/2 - 120, self.world.SCREEN_HEIGHT/2 - 50))
+        self.world.screen.blit(textSurface, (self.world.SCREEN_WIDTH/2 - 140, self.world.SCREEN_HEIGHT/2 - 45))

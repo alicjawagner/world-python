@@ -67,7 +67,8 @@ class Organism(ABC):
 
     def isAnimal(self):
         me = self.whoAmI()
-        if me == organismsNames.OrganismsNames.GRASS or me == organismsNames.OrganismsNames.GUARANA or me == organismsNames.OrganismsNames.DANDELION or me == organismsNames.OrganismsNames.DEADLY_NIGHTSHADE or me == organismsNames.OrganismsNames.PINE_BORSCHT:
+        if me == organismsNames.OrganismsNames.GRASS or me == organismsNames.OrganismsNames.GUARANA or me == organismsNames.OrganismsNames.DANDELION or (
+                me == organismsNames.OrganismsNames.DEADLY_NIGHTSHADE or me == organismsNames.OrganismsNames.PINE_BORSCHT or me == organismsNames.OrganismsNames.CYBERSHEEP):
             return False
         return True
 

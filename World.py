@@ -2,6 +2,7 @@ import animals.fox as fox
 import animals.human as human
 import animals.antelope as antelope
 import animals.sheep as sheep
+import animals.cyberSheep as cyberSheep
 import animals.turtle as turtle
 import animals.wolf as wolf
 import plants.dandelion as dandelion
@@ -98,6 +99,8 @@ class World:
             o = deadlyNightshade.DeadlyNightshade(self)
         elif which == organismsNames.OrganismsNames.PINE_BORSCHT:
             o = pineBorscht.PineBorscht(self)
+        elif which == organismsNames.OrganismsNames.CYBERSHEEP:
+            o = cyberSheep.CyberSheep(self)
         return o
 
     def addOrganism(self, newOrg):

@@ -25,7 +25,8 @@ class PineBorscht(plant.Plant):
                 toKill = point.Point(self.point.x + i, self.point.y + j)
                 if self.world.isFieldInBoard(toKill) == False or self.world.isFieldUnoccupied(toKill):
                     continue
-
+                
+                # excluding cyberShee
                 if self.world.findOnField(toKill).isAnimal():
                     self.world.text += str(self) + " has no mercy: "
                     self.world.findOnField(toKill).die()

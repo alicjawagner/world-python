@@ -32,6 +32,8 @@ class Game:
                         self.world.human.nextMove = self.world.human.DOWN
                     elif event.key == pygame.K_n:
                         self.world.nextRound()
+                    elif event.key == pygame.K_s:
+                        self.saveGameState()
 
             self.drawWorld()
             pygame.display.update()
@@ -59,7 +61,7 @@ class Game:
         textFont = pygame.font.SysFont('Helvetica', 15)
         lines = text.split("\n")
         for line in lines:
-            textSurface = textFont.render(line, False, (255, 255, 255))
+            textSurface = textFont.render(line, True, (255, 255, 255))
             self.world.screen.blit(textSurface, (x, y))
             y += 18
 
@@ -74,7 +76,7 @@ class Game:
         if self.world.human != None:
             textFont = pygame.font.SysFont('Helvetica', 16)
             if self.world.human.potionText != "":
-                textSurface = textFont.render(self.world.human.potionText, False, (255, 255, 255))
+                textSurface = textFont.render(self.world.human.potionText, True, (255, 255, 255))
                 self.world.screen.blit(textSurface, (x + 5, self.world.SCREEN_HEIGHT - 20))
 
 
@@ -86,5 +88,49 @@ class Game:
 
         gameOver = "Game Over"
         textFont = pygame.font.SysFont('Times New Roman', 55, True)
-        textSurface = textFont.render(gameOver, False, (255, 0, 0))
+        textSurface = textFont.render(gameOver, True, (255, 0, 0))
         self.world.screen.blit(textSurface, (self.world.SCREEN_WIDTH/2 - 140, self.world.SCREEN_HEIGHT/2 - 45))
+
+    def showInputBox(self, text):
+        color = (13, 15, 17)
+        w = 300
+        h = 80
+        x = self.world.SCREEN_WIDTH/2 - w/2
+        y = self.world.SCREEN_HEIGHT/2 - 80
+        
+        pygame.draw.rect(self.world.screen, color, pygame.Rect(x, y, w, h))
+        textFont = pygame.font.SysFont('Helvetica', 16)
+        textSurface = textFont.render(text, True, (255, 255, 255))
+        self.world.screen.blit(textSurface, (x + 20, y + 10))
+        inputText = ""
+
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_BACKSPACE:
+                        inputText = inputText[:-1]
+                        pygame.draw.rect(self.world.screen, color, pygame.Rect(x, y + h/2, w, h/2))
+                    elif event.key == pygame.K_RETURN:
+                        return inputText
+                    else:
+                        inputText += event.unicode
+            inputFont = pygame.font.Font(None, 32)
+            inputSurface = inputFont.render(inputText, True, (255, 255, 255))
+            self.world.screen.blit(inputSurface, (x + 25, y + 40))
+            pygame.display.update()
+
+
+    def saveGameState(self):
+        fileName = self.showInputBox("Saving: enter file name and hit enter")
+        self.saveToFile(fileName)
+
+    """def saveToFile(self, fileName):
+        BufferedWriter writer = new BufferedWriter(new FileWriter(World.PATH_TO_SAVES + fileName));
+
+        writer.write(world.getNumberOfBornOrganisms() +
+                     Organism.DELIMITER + world.organisms.size() + "\n");
+        for (Organism o: world.organisms)
+        o.writeMeToFile(writer);
+
+        writer.close();
+        world.text = "Game state saved";"""

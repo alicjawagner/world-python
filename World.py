@@ -23,11 +23,7 @@ class World:
     SCREEN_HEIGHT = BOARD_SIZE
     INITIAL_NUMBER_OF_ORGANISMS_OF_SPECIES = 3
     PATH_TO_SAVES = ".\\src\\game\\saves\\"
-    INSTRUCTIONS = """MOVEMENT: arrows
-    MAGIC POTION (strength +5): P
-    NEW ROUND:  N
-    SAVE:       S
-    LOAD:       L\n"""
+    INSTRUCTIONS = "MOVEMENT: arrows\nMAGIC POTION (strength +5): P\nNEW ROUND: N\nSAVE: S\nLOAD: L\n\n"
 
     def __init__(self):
         self.text = World.INSTRUCTIONS

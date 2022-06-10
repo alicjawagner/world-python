@@ -12,6 +12,7 @@ class Game:
         self.world.textFont = pygame.font.SysFont('Helvetica', 25)
         pygame.display.set_caption("The World")
 
+
     def startGame(self):
         while True:
             for event in pygame.event.get():
@@ -27,42 +28,43 @@ class Game:
 
             self.drawWorld()
             pygame.display.update()
+
     
     def drawWorld(self):
         self.world.screen.fill((0, 0, 0))
         for org in self.world.organisms:
             org.draw()
 
-        #drawComments(g);
+        self.drawComments()
 
         if self.world.human == None:
             self.gameOver()
 
 
-    """
+    def drawTextWithNewLines(self, text, x, y):
+        textFont = pygame.font.SysFont('Helvetica', 14)
+        lines = text.split("\n")
+        for line in lines:
+            textSurface = textFont.render(line, False, (255, 255, 255))
+            self.world.screen.blit(textSurface, (x, y))
+            y += 18
 
-    private void drawTextWithNewLines(Graphics g, String text, int x, int y) {
-        g.setColor(Color.white);
-        for (String line: text.split("\n"))
-        g.drawString(line, x, y += g.getFontMetrics().getHeight());}
 
-    private void drawComments(Graphics g) {
-        g.setColor(new Color(13, 15, 17))
-        int x = SCREEN_WIDTH - TEXT_FIELD_WIDTH
-        g.fillRect(x, 0, TEXT_FIELD_WIDTH, SCREEN_HEIGHT)
+    def drawComments(self):
+        x = self.world.SCREEN_WIDTH - self.world.TEXT_FIELD_WIDTH
+        pygame.draw.rect(self.world.screen, (13, 15, 17), pygame.Rect(x, 0,
+                        self.world.TEXT_FIELD_WIDTH, self.world.SCREEN_HEIGHT))
 
-        g.setFont(new Font("Helvetica", Font.PLAIN, 12))
-        drawTextWithNewLines(g, text, x + 5, 3)
+        self.drawTextWithNewLines(self.world.text, x + 5, 3)
 
-        if (human != null) {
-            String humanText = human.getPotionText()
-            if (!Objects.equals(humanText, ""))
-            g.drawString(humanText, x + 5, SCREEN_HEIGHT - 20)
-        }
-    }
-  """
+        if self.world.human != None:
+            textFont = pygame.font.SysFont('Helvetica', 14)
+            if self.world.human.potionText != "":
+                textSurface = textFont.render(self.world.human.potionText, False, (255, 255, 255))
+                self.world.screen.blit(textSurface, (x + 5, self.world.SCREEN_HEIGHT - 20))
+
+
     def gameOver(self):
-        
         alphaRect = pygame.Surface((self.world.SCREEN_WIDTH, self.world.SCREEN_HEIGHT), pygame.SRCALPHA)
         color = (0, 0, 0, 170)
         pygame.draw.rect(alphaRect, color, (0, 0, self.world.SCREEN_WIDTH, self.world.SCREEN_HEIGHT))

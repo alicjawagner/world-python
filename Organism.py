@@ -127,8 +127,8 @@ class Organism(ABC):
     def drawOrg(self, color):
         self.drawShapeOrg(color)
 
-        text_surface = self.world.textFont.render(self.sign, False, (255, 255, 255))
-        self.world.screen.blit(text_surface, (self.point.x * self.world.FIELD_SIZE + 10, self.point.y * self.world.FIELD_SIZE + 2))
+        textSur = self.world.textFont.render(self.sign, False, (255, 255, 255))
+        self.world.screen.blit(textSur, (self.point.x * self.world.FIELD_SIZE + 10, self.point.y * self.world.FIELD_SIZE + 2))
 
 """
     public void writeMeToFile(BufferedWriter writer) throws IOException {

@@ -26,7 +26,7 @@ class PineBorscht(plant.Plant):
                 if self.world.isFieldInBoard(toKill) == False or self.world.isFieldUnoccupied(toKill):
                     continue
 
-                if self.world.whatIsOnBoard(toKill).isAnimal():
+                if self.world.findOnField(toKill).isAnimal():
                     self.world.text += str(self) + " has no mercy: "
                     self.world.findOnField(toKill).die()
         super().action()

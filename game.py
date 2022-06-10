@@ -20,6 +20,10 @@ class Game:
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_RIGHT:
                         print("right pressed")
+                    elif event.key == pygame.K_UP:
+                        self.world.human = None
+                    elif event.key == pygame.K_DOWN:
+                        self.world.nextRound()
 
             self.drawWorld()
             pygame.display.update()
@@ -31,8 +35,8 @@ class Game:
 
         #drawComments(g);
 
-        #if(human == null) {
-        #    gameOver(g); }
+        if self.world.human == None:
+            self.gameOver()
 
 
     """
@@ -56,23 +60,15 @@ class Game:
             g.drawString(humanText, x + 5, SCREEN_HEIGHT - 20)
         }
     }
+  """
+    def gameOver(self):
+        
+        alphaRect = pygame.Surface((self.world.SCREEN_WIDTH, self.world.SCREEN_HEIGHT), pygame.SRCALPHA)
+        color = (0, 0, 0, 170)
+        pygame.draw.rect(alphaRect, color, (0, 0, self.world.SCREEN_WIDTH, self.world.SCREEN_HEIGHT))
+        self.world.screen.blit(alphaRect, (0, 0))
 
-    private void gameOver(Graphics g) {
-        String gameOver = "Game Over"
-        g.setFont(new Font("Times New Roman", Font.BOLD, 55))
-        FontMetrics metrics2 = getFontMetrics(g.getFont())
-
-        g.setColor(new Color(0, 0, 0, 170))
-        g.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
-
-        g.setColor(Color.red)
-        g.drawString(gameOver, (SCREEN_WIDTH -
-                     metrics2.stringWidth(gameOver))/2, SCREEN_HEIGHT/2)
-    }
-
-    @ Override
-    public void paintComponent(Graphics g) {
-        super().paintComponent(g)
-        drawWorld(g)
-    }
-    """
+        gameOver = "Game Over"
+        textFont = pygame.font.SysFont('Times New Roman', 55)
+        textSurface = textFont.render(gameOver, False, (255, 0, 0))
+        self.world.screen.blit(textSurface, (self.world.SCREEN_WIDTH/2 - 120, self.world.SCREEN_HEIGHT/2 - 60))

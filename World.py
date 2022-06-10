@@ -41,7 +41,7 @@ class World:
         self.textFont = None
         self.prepareWorld()
 
-    def isFieldInBoard(point):
+    def isFieldInBoard(self, point):
         return point.x >= 0 and point.x < World.FIELDS_NUMBER and point.y >= 0 and point.y < World.FIELDS_NUMBER
 
     def isFieldUnoccupied(self, point):

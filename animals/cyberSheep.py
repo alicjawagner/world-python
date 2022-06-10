@@ -42,10 +42,10 @@ class CyberSheep(animal.Animal):
                 borschts.append(org.point)
         return borschts
 
-    def findSmallestDistance(self, listToFind, object):
+    def findSmallestDistance(self, listToFind, point):
         nearestPoint = (listToFind[0], 9999999.0)
         for item in listToFind:
-            distance = math.hypot(object.x - item.x, object.y - item.y)
+            distance = math.hypot(point.x - item.x, point.y - item.y)
             if distance < nearestPoint[1]:
                 nearestPoint = (item, distance)
         return nearestPoint[0]

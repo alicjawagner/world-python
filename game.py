@@ -1,6 +1,18 @@
 import pygame, sys
 import world
 import organism
+import animals.fox as fox
+import animals.human as human
+import animals.antelope as antelope
+import animals.sheep as sheep
+import animals.cyberSheep as cyberSheep
+import animals.turtle as turtle
+import animals.wolf as wolf
+import plants.dandelion as dandelion
+import plants.deadlyNightshade as deadlyNightshade
+import plants.grass as grass
+import plants.guarana as guarana
+import plants.pineBorscht as pineBorscht
 
 
 class Game:
@@ -36,31 +48,23 @@ class Game:
                         self.world.nextRound()
                     elif event.key == pygame.K_s:
                         self.saveGameState()
-
+                    elif event.key == pygame.K_l:
+                        self.loadGameState()
             self.drawWorld()
             pygame.display.update()
-
-    """ case KeyEvent.VK_S:
-            saving.saveGameState()
-            break
-        case KeyEvent.VK_L:
-            loading.loadGameState()
-    """
 
     
     def drawWorld(self):
         self.world.screen.fill((0, 0, 0))
         for org in self.world.organisms:
             org.draw()
-
         self.drawComments()
-
         if self.world.human == None:
             self.gameOver()
 
 
     def drawTextWithNewLines(self, text, x, y):
-        textFont = pygame.font.SysFont('Helvetica', 15)
+        textFont = pygame.font.SysFont('Helvetica', 14)
         lines = text.split("\n")
         for line in lines:
             textSurface = textFont.render(line, True, (255, 255, 255))
@@ -72,7 +76,6 @@ class Game:
         x = self.world.SCREEN_WIDTH - self.world.TEXT_FIELD_WIDTH
         pygame.draw.rect(self.world.screen, (13, 15, 17), pygame.Rect(x, 0,
                         self.world.TEXT_FIELD_WIDTH, self.world.SCREEN_HEIGHT))
-
         self.drawTextWithNewLines(self.world.text, x + 5, 3)
 
         if self.world.human != None:
@@ -127,9 +130,65 @@ class Game:
         self.saveToFile(fileName)
 
     def saveToFile(self, fileName):
-        f = open(self.savesPath + fileName, "w")
-        f.write(str(self.world.numberOfBornOrganisms) + organism.Organism.DELIMITER + str(len(self.world.organisms)) + "\n")
-        for org in self.world.organisms:
-            org.writeMeToFile(f)
-        f.close()
-        self.world.text = "Game state saved"
+        try:
+            f = open(self.savesPath + fileName, "w")
+            f.write(str(self.world.numberOfBornOrganisms) + organism.Organism.DELIMITER + str(len(self.world.organisms)) + "\n")
+            for org in self.world.organisms:
+                org.writeMeToFile(f)
+            f.close()
+            self.world.text = "Game state saved"
+        except:
+            self.world.text = "Problem with opening/writing to file"
+
+    def loadGameState(self):
+        fileName = self.showInputBox("Loading: enter file name and hit enter")
+        self.loadFromFile(fileName)
+
+    def loadFromFile(self, fileName):
+        try:
+            f = open(self.savesPath + fileName, "r")
+            self.world.board = None
+            self.world.board = [[None for x in range(self.world.FIELDS_NUMBER)]
+                                for y in range(self.world.FIELDS_NUMBER)]
+            self.world.human = None
+            self.world.organisms.clear()
+            self.world.toAdd.clear()
+
+            firstLine = f.readline().strip()
+            elements = firstLine.split(organism.Organism.DELIMITER)
+            self.world.numberOfBornOrganisms = int(elements[0])
+
+            for line in f:
+                line = line.strip().split(organism.Organism.DELIMITER)
+                if line[0] == "F":
+                    o = fox.Fox(self.world, line)
+                elif line[0] == "W":
+                    o = wolf.Wolf(self.world, line)
+                elif line[0] == "S":
+                    o = sheep.Sheep(self.world, line)
+                elif line[0] == "C":
+                    o = cyberSheep.CyberSheep(self.world, line)
+                elif line[0] == "A":
+                    o = antelope.Antelope(self.world, line)
+                elif line[0] == "H":
+                    o = human.Human(self.world, line)
+                    self.world.human = o
+                elif line[0] == "T":
+                    o = turtle.Turtle(self.world, line)
+                elif line[0] == "g":
+                    o = grass.Grass(self.world, line)
+                elif line[0] == "d":
+                    o = dandelion.Dandelion(self.world, line)
+                elif line[0] == "u":
+                    o = guarana.Guarana(self.world, line)
+                elif line[0] == "n":
+                    o = deadlyNightshade.DeadlyNightshade(self.world, line)
+                elif line[0] == "b":
+                    o = pineBorscht.PineBorscht(self.world, line)
+
+                self.world.organisms.append(o)
+                o.putOnBoard()
+            f.close()
+            self.world.text = "Game state loaded"
+        except:
+            self.world.text = "File not found"

@@ -1,6 +1,8 @@
 import pygame, sys
+from organismsNames import OrganismsNames
 import world
 import organism
+import point
 import animals.fox as fox
 import animals.human as human
 import animals.antelope as antelope
@@ -50,6 +52,9 @@ class Game:
                         self.saveGameState()
                     elif event.key == pygame.K_l:
                         self.loadGameState()
+                elif self.world.human != None and event.type == pygame.MOUSEBUTTONDOWN:
+                    pos = pygame.mouse.get_pos()
+                    self.handleMouseClick(pos)
             self.drawWorld()
             pygame.display.update()
 
@@ -192,3 +197,59 @@ class Game:
             self.world.text = "Game state loaded"
         except:
             self.world.text = "File not found"
+
+
+    def handleMouseClick(self, pos):
+        field = self.getMouseField(pos)
+        if field == None:
+            return
+        if self.world.findOnField(field) == None:
+            self.showMenuAndAddOrg(field)
+
+    def getMouseField(self, mouseLocation):
+        x = int(mouseLocation[0] / self.world.FIELD_SIZE)
+        y = int(mouseLocation[1] / self.world.FIELD_SIZE)
+        if x >= self.world.FIELDS_NUMBER or y >= self.world.FIELDS_NUMBER:
+            return None
+        return point.Point(x, y)
+
+    def showMenuAndAddOrg(self, field):
+        buttons = self.createButtons()
+        pygame.display.update()
+        click = False
+        while True:
+            mousePos = pygame.mouse.get_pos()
+            for key in buttons:
+                if buttons[key].collidepoint(mousePos):
+                    if click:
+                        o = self.world.createOrganism(key)
+                        self.world.addOrganism(o)
+                        o.moveToField(field)
+                        return
+
+            click = False
+            for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == 1:
+                        click = True
+
+
+    def createButtons(self):
+        color = (13, 15, 17)
+        w = 160
+        h = 20
+        x = self.world.SCREEN_WIDTH/2 - w/2
+        y = self.world.SCREEN_HEIGHT/2 - 11*h/2
+        textFont = pygame.font.SysFont('Helvetica', 16)
+        buttons = {}
+        for org in OrganismsNames:
+            if (org == OrganismsNames.HUMAN):
+                pass
+            else:
+                buttons[org] = pygame.Rect(x, y, w, h)
+                pygame.draw.rect(self.world.screen, color, buttons[org])
+                text = str(org).split(".")[1]
+                textSurface = textFont.render(text, True, (255, 255, 255))
+                self.world.screen.blit(textSurface, (x + 10, y + 2))
+                y += h
+        return buttons

@@ -18,16 +18,30 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit(0)
-                elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_RIGHT:
-                        print("right pressed")
+                elif self.world.human != None and event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_p:
+                        self.world.human.startElixir()
+                        self.world.human.nextMove = self.world.human.STAY
+                    elif event.key == pygame.K_LEFT:
+                        self.world.human.nextMove = self.world.human.LEFT
+                    elif event.key == pygame.K_RIGHT:
+                        self.world.human.nextMove = self.world.human.RIGHT
                     elif event.key == pygame.K_UP:
-                        self.world.human = None
+                        self.world.human.nextMove = self.world.human.UP
                     elif event.key == pygame.K_DOWN:
+                        self.world.human.nextMove = self.world.human.DOWN
+                    elif event.key == pygame.K_n:
                         self.world.nextRound()
 
             self.drawWorld()
             pygame.display.update()
+
+    """ case KeyEvent.VK_S:
+            saving.saveGameState()
+            break
+        case KeyEvent.VK_L:
+            loading.loadGameState()
+    """
 
     
     def drawWorld(self):
@@ -42,7 +56,7 @@ class Game:
 
 
     def drawTextWithNewLines(self, text, x, y):
-        textFont = pygame.font.SysFont('Helvetica', 14)
+        textFont = pygame.font.SysFont('Helvetica', 15)
         lines = text.split("\n")
         for line in lines:
             textSurface = textFont.render(line, False, (255, 255, 255))
@@ -58,7 +72,7 @@ class Game:
         self.drawTextWithNewLines(self.world.text, x + 5, 3)
 
         if self.world.human != None:
-            textFont = pygame.font.SysFont('Helvetica', 14)
+            textFont = pygame.font.SysFont('Helvetica', 16)
             if self.world.human.potionText != "":
                 textSurface = textFont.render(self.world.human.potionText, False, (255, 255, 255))
                 self.world.screen.blit(textSurface, (x + 5, self.world.SCREEN_HEIGHT - 20))
@@ -71,6 +85,6 @@ class Game:
         self.world.screen.blit(alphaRect, (0, 0))
 
         gameOver = "Game Over"
-        textFont = pygame.font.SysFont('Times New Roman', 55)
+        textFont = pygame.font.SysFont('Times New Roman', 55, True)
         textSurface = textFont.render(gameOver, False, (255, 0, 0))
-        self.world.screen.blit(textSurface, (self.world.SCREEN_WIDTH/2 - 120, self.world.SCREEN_HEIGHT/2 - 60))
+        self.world.screen.blit(textSurface, (self.world.SCREEN_WIDTH/2 - 120, self.world.SCREEN_HEIGHT/2 - 50))
